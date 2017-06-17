@@ -1,0 +1,16 @@
+#!/bin/bash
+
+PHPVER=/usr/local/bin/phpver
+
+echo "Downloading ..."
+
+curl https://raw.githubusercontent.com/storyn26383/php-version-switcher/master/phpver > $PHPVER
+
+chmod +x $PHPVER
+
+echo "Done."
+
+echo
+
+echo "Usage: phpver [version]"
+echo "  phpver 71    Swith to php 7.1"
