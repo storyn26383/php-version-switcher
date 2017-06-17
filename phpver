@@ -1,0 +1,17 @@
+#!/bin/bash
+
+CURR_PHP_VER=`php -v | grep 'PHP.*cli' | sed -E 's/.*([0-9])+\.([0-9]+)\.[0-9]+.*/php\1\2/'`
+TARGET_PHP_VER=`echo "php${1}"`
+
+if [ $CURR_PHP_VER == $TARGET_PHP_VER ]; then
+    echo "Nothing to do."
+    exit 1
+fi
+
+echo "Switch version from ${CURR_PHP_VER} to ${TARGET_PHP_VER} ..."
+
+brew unlink $CURR_PHP_VER
+
+brew link $TARGET_PHP_VER
+
+echo "Done!"
