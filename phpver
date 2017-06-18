@@ -10,8 +10,19 @@ fi
 
 echo "Switch version from ${CURR_PHP_VER} to ${TARGET_PHP_VER} ..."
 
+CURR_EXTS=`php -m`
+
 brew unlink $CURR_PHP_VER
 
 brew link $TARGET_PHP_VER
 
+TARGET_EXTS=`php -m`
+
 echo "Done!"
+
+echo
+
+echo "Extension differences:"
+
+diff <(echo "$CURR_EXTS") <(echo "$TARGET_EXTS") |\
+    grep -E "<|>" | sed "s/</-/" | sed "s/>/+/" | sed "/Warning/d" | sed -E "/^[+-] $/d"
