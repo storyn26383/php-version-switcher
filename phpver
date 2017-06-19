@@ -27,5 +27,11 @@ echo
 
 echo "Extension differences:"
 
-diff <(echo "$CURR_EXTS") <(echo "$TARGET_EXTS") |\
-    grep -E "<|>" | sed "s/</-/" | sed "s/>/+/" | sed "/Warning/d" | sed -E "/^[+-] $/d"
+diff -u <(echo "$CURR_EXTS") <(echo "$TARGET_EXTS")  2>&- | php -r '
+$input = file_get_contents("php://stdin");
+foreach (explode("\n", $input) as $line) {
+  if (preg_match("/^(\+|\-)[a-zA-Z]/", $line)) {
+    echo $line . "\n";
+  }
+}
+'
